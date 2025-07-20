@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>setup test</title>
+</head>
+<body>
+    <div id="app" class="container d-flex justify-content-center align-items-center vh-100">
+        <form class="row g-3 needs-validation w-75" @submit="validateForm">
+            <div class="col-md-4">
+                <label for="validationCustom01" class="form-label">First name</label>
+                <input type="text" class="form-control" :class="{'is-invalid':!firstNameValid,'is-valid':firstNameValid}" id="validationCustom01" v-model="firstName" required>
+                <div class="valid-feedback">      
+                Looks good!
+                </div>
+                 <div class="invalid-feedback">
+                    Please write your First Name.
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustom02" class="form-label">Last name</label>
+                <input type="text" class="form-control" :class="{'is-invalid':!lastNameValid,'is-valid':lastNameValid}" id="validationCustom02" v-model="lastName" required>
+                <div class="valid-feedback">
+                Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please write your Last Name.
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustomUsername" class="form-label">Username</label>
+                <div class="input-group has-validation">
+                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                <input type="text" class="form-control" :class="{'is-invalid':!userNameValid,'is-valid':userNameValid}" id="validationCustomUsername" aria-describedby="inputGroupPrepend" v-model="username" required>
+                <div class="valid-feedback">
+                Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please choose a username.
+                </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="validationCustom03" class="form-label">City</label>
+                <input type="text" class="form-control" :class="{'is-invalid':!cityNameValid,'is-valid':cityNameValid}" v-model="city" id="validationCustom03" required>
+                <div class="invalid-feedback">
+                Please provide a valid city.
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label for="validationCustom04" class="form-label">State</label>
+                <select class="form-select" :class="{'is-invalid':!stateNameValid,'is-valid':stateNameValid}" v-model='state' id="validationCustom04" required>
+                <option selected disabled value="">Choose...</option>
+                <option>Dhaka</option>
+                <option>Barisal</option>
+                <option>Citagaon</option>
+                <option>Sylet</option>
+                <option>Rangpur</option>
+            </select>
+                <div class="invalid-feedback">
+                Please select a valid state.
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label for="validationCustom05" class="form-label">Zip</label>
+                <input
+                  type="text"
+                  v-model="zip"
+                  @input="zip = zip.replace(/\D/g, '')"
+                  :class="{'is-invalid':!zipNameValid,'is-valid':zipNameValid}"
+                  class="form-control"
+                  id="validationCustom05"
+                  required
+                >
+                <div class="invalid-feedback">
+                Please provide a valid zip.
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-check">
+                <input class="form-check-input" :class="{'is-invalid': !terms,'is-valid':  terms} " type="checkbox" value="" v-model="terms" id="invalidCheck" required>
+                <!-- :class="{'is-invalid': wasValidated && !terms, 'is-valid': wasValidated && terms}" -->
+                <label class="form-check-label" for="invalidCheck">
+                    Agree to terms and conditions
+                </label>
+                <div class="invalid-feedback" id="invalidCheck">
+                    You must agree before submitting.
+                </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit" @submit="validateForm(event)">Submit form</button>
+            </div>
+        </form>
+    </div>
+        <script>
+    const { createApp, ref, watch } = Vue;
+    createApp({
+        setup(){
+            let firstName = ref('');
+            let lastName = ref('');
+            let username = ref('');
+            let city = ref('');
+            let state = ref('');
+            let zip = ref('');
+            let terms = ref(false);
+            let firstNameValid = ref();
+            let lastNameValid = ref();
+            let userNameValid = ref();
+            let cityNameValid = ref();
+            let stateNameValid = ref();
+            let zipNameValid = ref();
+            watch([firstName] ,(newValue, oldValue) =>{
+                if(newValue[0].length > 0){
+                    firstNameValid.value = true;
+                }else{
+                    firstNameValid.value = false;
+                }
+            })
+            watch([lastName] ,(newValue, oldValue) =>{
+                if(newValue[0].length > 0){
+                    lastNameValid.value = true;
+                }else{
+                    lastNameValid.value = false;
+                }
+            })
+            watch([username] ,(newValue, oldValue) =>{
+                if(newValue[0].length > 0){
+                    userNameValid.value = true;
+                }else{
+                    userNameValid.value = false;
+                }
+            })
+            watch([city] ,(newValue, oldValue) =>{
+                if(newValue[0].length > 0){
+                    cityNameValid.value = true;
+                }else{
+                    cityNameValid.value = false;
+                }
+            })
+            watch([state] ,(newValue, oldValue) =>{
+                if(newValue[0].length > 0){
+                    stateNameValid.value = true;
+                }else{
+                    stateNameValid.value = false;
+                }
+            })
+            watch([zip] ,(newValue, oldValue) =>{
+                if(newValue[0].length > 0){
+                    zipNameValid.value = true;
+                }else{
+                    zipNameValid.value = false;
+                }
+            })
+           function validateForm(event) {
+                event.preventDefault();
+                if (firstNameValid.value && lastNameValid.value && userNameValid.value && cityNameValid.value && stateNameValid.value && zipNameValid.value && terms.value) {
+                    alert('Form submitted successfully!Thank you.'+firstName.value + ' ' + lastName.value + ', your username is ' + username.value + '. You are from ' + city.value + ', ' + state.value + ', ' + zip.value + '. You have agreed to the terms.'
+                    );
+                    console.log({
+                        firstName: firstName.value,
+                        lastName: lastName.value,
+                        username: username.value,
+                        city: city.value,
+                        state: state.value,
+                        zip: zip.value,
+                        terms: terms.value
+                    });
+                } else {
+                    alert('Please fill out all required fields correctly.');
+                    console.log('Form validation failed');
+                }
+            }
+            return {
+                firstName,
+                lastName,
+                username,
+                city,  
+                state,
+                zip,
+                terms,
+                firstNameValid,
+                lastNameValid,
+                userNameValid,
+                cityNameValid,
+                stateNameValid,
+                zipNameValid,
+                validateForm // <-- just reference the function
+            }
+        }
+    }).mount('#app');
+</script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
