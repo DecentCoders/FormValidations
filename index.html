@@ -9,7 +9,8 @@
     <title>setup test</title>
 </head>
 <body>
-    <div id="app" class="container d-flex justify-content-center align-items-center vh-100">
+    <div id="app" class="container d-flex flex-column justify-content-center align-items-center vh-100">
+        <div class="bg-primary m-5 px-5 py-3 text-white"><h3>Default validation</h3></div>
         <form class="row g-3 needs-validation w-75" @submit="validateForm">
             <div class="col-md-4">
                 <label for="validationCustom01" class="form-label">First name</label>
